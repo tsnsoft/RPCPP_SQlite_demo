@@ -11,6 +11,6 @@ echo Creating commit...
 git commit -m "%commit_msg%"
 
 echo Pushing to GitHub...
-git push origin master
+git push origin main
 
 echo Done!
