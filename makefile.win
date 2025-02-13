@@ -29,7 +29,7 @@ RPCPP_SQlite_demo.exe: $(OBJ)
 
 	$(CXX) $(LINKOBJ) -o "RPCPP_SQlite_demo.exe" $(LIBS)
 
-main.o: main.cpp
+main.o: main.cpp tsnsoft.xpm
 	$(CXX) -c "main.cpp" -o "main.o" $(CXXFLAGS) 
 
 RPCPP_SQlite_demo_private.res: RPCPP_SQlite_demo_private.rc 
