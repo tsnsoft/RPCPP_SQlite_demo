@@ -11,8 +11,8 @@ ResourceIncludes =
 MakeIncludes = 
 PrivateResource = RPCPP_SQlite_demo_private.rc
 Compiler = 
-CppCompiler = -pipe -mthreads -D__GNUWIN32__ -D__WXMSW__ -DwxUSE_UNICODE -Wall -g -O0 -ID:\Development\RedPanda-CPP\wxWidgets\include -ID:\Development\RedPanda-CPP\wxWidgets\lib\gcc_lib\mswud
-Linker = -LD:\Development\RedPanda-CPP\wxWidgets\lib\gcc_lib -mthreads -lwxmsw32ud_core -lwxbase32ud -lwxpngd -lwxjpegd -lwxtiffd -lwxzlibd -lwxregexud -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lcomctl32 -lwsock32 -lodbc32 -lshlwapi -lversion -loleacc -luxtheme -mwindows -lstdc++ -finput-charset=utf-8 -lsqlite3
+CppCompiler = -pipe -mthreads -D__GNUWIN32__ -D__WXMSW__ -DwxUSE_UNICODE -Wall -g -O0
+Linker = -mthreads -lwxmsw32ud_core -lwxbase32ud -lwxpngd -lwxjpegd -lwxtiffd -lwxzlibd -lwxregexud -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lcomctl32 -lwsock32 -lodbc32 -lshlwapi -lversion -loleacc -luxtheme -mwindows -lstdc++ -finput-charset=utf-8 -lsqlite3
 ResourceCommand = 
 IsCpp = 1
 Icon = app.ico
@@ -44,16 +44,16 @@ UseUTF8 = 1
 
 
 [Unit1]
-FileName = main.cpp
+FileName = tsnsoft.xpm
 CompileCpp = 1
-Folder = Sources
-Compile = 1
-Link = 1
+Folder = Others
+Compile = 0
+Link = 0
 Priority = 1000
 OverrideBuildCmd = 0
 BuildCmd = 
 FileEncoding = PROJECT
-RealEncoding = UTF-8
+RealEncoding = ASCII
 
 
 [VersionInfo]
@@ -77,15 +77,15 @@ SyncProduct = 1
 
 
 [Unit2]
-FileName = tsnsoft.xpm
-Folder = Others
-Compile = 0
-Link = 0
+FileName = main.cpp
+Folder = Sources
+Compile = 1
+Link = 1
 Priority = 1000
 OverrideBuildCmd = 0
 BuildCmd = 
 FileEncoding = PROJECT
-RealEncoding = ASCII
+RealEncoding = UTF-8
 CompileCpp = 1
 
 
