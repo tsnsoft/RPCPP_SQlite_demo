@@ -2,6 +2,7 @@
 from tkinter import filedialog, messagebox
 import os
 import json
+import shutil
 
 # Путь к файлу конфигурации
 CONFIG_FILE = 'update_dev_paths.json'
@@ -40,28 +41,61 @@ def save_config(wxwidgets_folder, dev_file):
 def update_dev_file(dev_file, wxwidgets_folder):
     """Функция для обновления пути в файле .dev"""
     try:
+        # Создаём резервную копию файла
+        shutil.copy(dev_file, dev_file + ".bak")
+        print(f"Создана резервная копия: {dev_file}.bak")
+
         with open(dev_file, 'r') as file:
             content = file.readlines()
 
         # Папки для включений и библиотек
-        includes_line = "Includes ="
-        libs_line = "Libs ="
-
-        # Формируем пути с прямыми слэшами
         wx_include = wxwidgets_folder.replace('\\', '/') + '/include'
         wx_lib_mswud = wxwidgets_folder.replace('\\', '/') + '/lib/gcc_lib/mswud'
         wx_lib = wxwidgets_folder.replace('\\', '/') + '/lib/gcc_lib'
 
-        # Обновляем строки с путями
-        for i in range(len(content)):
-            if includes_line in content[i]:
-                content[i] = f"{includes_line} {wx_include};{wx_lib_mswud}\n"
-            if libs_line in content[i]:
-                content[i] = f"{libs_line} {wx_lib}\n"
+        # Новые строки для записи
+        new_includes = f"Includes = {wx_include};{wx_lib_mswud}\n"
+        new_libs = f"Libs = {wx_lib}\n"
+
+        # Фильтруем строки, исключая старые Includes и Libs
+        new_content = []
+        in_project_section = False
+        includes_written = False
+        libs_written = False
+
+        for line in content:
+            stripped_line = line.strip()
+
+            # Отслеживаем секцию [Project]
+            if stripped_line == "[Project]":
+                in_project_section = True
+                new_content.append(line)
+                continue
+
+            # Если строка начинается с Includes = или Libs =, пропускаем её
+            if stripped_line.startswith("Includes =") or stripped_line.startswith("Libs ="):
+                continue
+
+            # Добавляем остальные строки
+            new_content.append(line)
+
+            # Если мы в секции [Project] и ещё не добавили Includes и Libs, добавляем их
+            if in_project_section and not includes_written:
+                new_content.append(new_includes)
+                includes_written = True
+            if in_project_section and not libs_written:
+                new_content.append(new_libs)
+                libs_written = True
+
+        # Если Includes или Libs не были добавлены (например, секция [Project] не найдена), добавляем их в конец
+        if not includes_written:
+            new_content.append(new_includes)
+        if not libs_written:
+            new_content.append(new_libs)
 
         # Записываем изменённый файл
         with open(dev_file, 'w') as file:
-            file.writelines(content)
+            file.writelines(new_content)
         print("Файл успешно обновлён!")
 
     except Exception as e:
