@@ -4,7 +4,6 @@ cd /d "%~dp0"
 echo Adding all changes...
 git add .
 
-:: Обработка даты и времени
 for /f "tokens=1-3 delims=/.- " %%A in ("%date%") do set "datepart=%%C%%B%%A"
 for /f "tokens=1-2 delims=:" %%D in ("%time%") do set "timepart=%%D%%E"
 set "timepart=%timepart: =%"
