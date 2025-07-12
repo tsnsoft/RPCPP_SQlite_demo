@@ -1,22 +1,25 @@
 @echo off
 cd /d "%~dp0"
 
-echo Добавление всех изменений...
+echo Adding all changes...
 git add .
 
-:: Пол rakaia date and time
-for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /value') do set "datetime=%%I"
+:: Try to capture date and time using wmic
+for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /value 2^>nul') do set "datetime=%%I"
 if not defined datetime (
-    echo Ошибка: Не удалось получить дату и время.
-    set "commit_msg=rev. fallback_commit"
+    echo Warning: wmic failed, using fallback date/time method.
+    :: Fallback to date and time commands
+    for /f "tokens=2 delims=." %%A in ("%date%") do set "datepart=%%A"
+    for /f "tokens=1-2 delims=:" %%B in ("%time%") do set "timepart=%%B%%C"
+    set "commit_msg=rev. %datepart:~-8%_%timepart:~0,6%"
 ) else (
     set "commit_msg=rev. %datetime:~0,8%_%datetime:~8,6%"
 )
 
-echo Создание коммита с сообщением: %commit_msg%
+echo Creating commit with message: %commit_msg%
 git commit -m "%commit_msg%"
 
-echo Отправка на GitHub...
+echo Pushing to GitHub...
 git push origin main
 
-echo Готово!
+echo Done!
