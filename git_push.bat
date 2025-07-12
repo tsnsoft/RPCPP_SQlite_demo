@@ -4,13 +4,14 @@ cd /d "%~dp0"
 echo Adding all changes...
 git add .
 
-:: Try to capture date and time using wmic
-set "datetime="
-for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /value 2^>nul') do set "datetime=%%I"
-echo Debug: wmic datetime=%datetime%
-if not defined datetime (
-    echo Warning: wmic failed, using fallback date/time method.
-    :: Fallback: Use %date% and %time%
+:: Проверка среды выполнения (Git Bash/WSL или Windows)
+for /f "tokens=*" %%I in ('echo %OSTYPE%') do set "ostype=%%I"
+if "%ostype%"=="msys" (
+    echo Debug: Detected Git Bash/WSL, using Unix date command.
+    for /f "tokens=*" %%I in ('date +%%Y%%m%%d_%%H%%M%%S') do set "commit_msg=rev. %%I"
+) else (
+    echo Debug: Using Windows date/time.
+    :: Обработка различных форматов даты (MM/DD/YYYY, DD-MM-YYYY, DD.MM.YYYY и т.д.)
     for /f "tokens=1-3 delims=/.- " %%A in ("%date%") do (
         set "day=%%A"
         set "month=%%B"
@@ -21,17 +22,16 @@ if not defined datetime (
         set "minute=%%E"
         set "second=%%F"
     )
-    :: Remove leading space in hour (e.g., " 1" to "01")
+    :: Удаление пробела в часах (например, " 1" → "01")
     set "hour=%hour: =%"
-    :: Normalize to YYYYMMDD_HHMMSS
+    :: Нормализация в YYYYMMDD_HHMMSS
     set "datepart=%year%%month%%day%"
     set "timepart=%hour%%minute%%second%"
     set "commit_msg=rev. %datepart:~-8%_%timepart:~0,6%"
-) else (
-    set "commit_msg=rev. %datetime:~0,8%_%datetime:~8,6%"
 )
 
-:: Debug output
+:: Отладочный вывод
+echo Debug: ostype=%ostype%
 echo Debug: date=%date%, time=%time%
 echo Debug: datepart=%datepart%, timepart=%timepart%
 echo Debug: commit_msg=%commit_msg%
