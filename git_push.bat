@@ -4,8 +4,9 @@ cd /d "%~dp0"
 echo Adding all changes...
 git add .
 
-for /f "tokens=2 delims==." %%I in ('wmic os get localdatetime /value') do set datetime=%%I
-set commit_msg=rev. %datetime%
+:: Capture date and time in a reliable format (YYYYMMDD_HHMMSS)
+for /f "tokens=2 delims==" %%I in ('wmic os get localdatetime /value') do set "datetime=%%I"
+set "commit_msg=rev. %datetime:~0,8%_%datetime:~8,6%"
 
 echo Creating commit...
 git commit -m "%commit_msg%"
