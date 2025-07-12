@@ -5,7 +5,7 @@ echo Adding all changes...
 git add .
 
 for /f "tokens=2 delims==." %%I in ('wmic os get localdatetime /value') do set datetime=%%I
-set commit_msg=rev. %datetime%
+set commit_msg=migration to wxWidgets 3.3
 
 echo Creating commit...
 git commit -m "%commit_msg%"

@@ -2,17 +2,17 @@
 filename = RPCPP_SQlite_demo.dev
 name = RPCPP_SQlite_demo
 UnitCount = 2
-Type = 1
+Type = 0
 Ver = 3
-Includes = D:/Development/RedPanda-CPP/wxWidgets/include;D:/Development/RedPanda-CPP/wxWidgets/lib/gcc_lib/mswud
-Libs = D:/Development/RedPanda-CPP/wxWidgets/lib/gcc_lib
+Includes = C:/DevTools/Libs/wxWidgets/include;C:/DevTools/Libs/wxWidgets/lib/gcc_lib/mswud
+Libs = C:/DevTools/Libs/wxWidgets/lib/gcc_lib
 Bins = 
 ResourceIncludes = 
 MakeIncludes = 
 PrivateResource = RPCPP_SQlite_demo_private.rc
 Compiler = 
 CppCompiler = -pipe -mthreads -D__GNUWIN32__ -D__WXMSW__ -DwxUSE_UNICODE -Wall -g -O0
-Linker = -mthreads -lwxmsw32ud_core -lwxbase32ud -lwxpngd -lwxjpegd -lwxtiffd -lwxzlibd -lwxregexud -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lcomctl32 -lwsock32 -lodbc32 -lshlwapi -lversion -loleacc -luxtheme -mwindows -lstdc++ -finput-charset=utf-8 -lsqlite3 -static
+Linker = -mthreads -lwxmsw33ud_core -lwxbase33ud -lgdiplus -lmsimg32 -lwxpngd -lwxjpegd -lwxtiffd -lwxzlibd -lwxregexud -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lcomctl32 -lwsock32 -lodbc32 -lshlwapi -lversion -loleacc -luxtheme -mwindows -lstdc++ -finput-charset=utf-8 -lsqlite3 -static
 ResourceCommand = 
 IsCpp = 1
 Icon = app.ico
@@ -30,7 +30,7 @@ PrecompiledHeader =
 CommandLine = 
 Folders = 
 IncludeVersionInfo = 0
-SupportXPThemes = 0
+SupportXPThemes = 1
 CompilerSet = 1
 StaticLink = 0
 AddCharset = 1
